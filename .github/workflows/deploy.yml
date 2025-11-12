@@ -21,6 +21,7 @@ jobs:
           cp -r index.html pages assets scripts public/ || true
           # add any other files/folders needed for the site
 
+          
       - name: Deploy to public GitHub Pages repo
         uses: peaceiris/actions-gh-pages@v3
         with:
