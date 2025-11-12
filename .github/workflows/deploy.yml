@@ -3,32 +3,29 @@ name: Deploy website to GitHub Pages
 on:
   push:
     branches:
-      - main  # deploy whenever you push to main
-  workflow_dispatch:  # allow manual deploys
+      - main
+  workflow_dispatch:
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout source
+      - name: Checkout private repo
         uses: actions/checkout@v4
 
-      - name: Setup GitHub Pages
-        uses: actions/configure-pages@v4
-
-      - name: Upload site files
+      - name: Prepare public folder
         run: |
+          rm -rf public
           mkdir public
-          cp -r --no-clobber $(find . -maxdepth 1 -not -name public -not -name .) public/
-          cp -r pages assets scripts public/ || true
+          cp -r index.html pages assets scripts public/ || true
+          # add any other files/folders needed for the site
 
-          
-      - name: Deploy to GitHub Pages using deploy key
+      - name: Deploy to public GitHub Pages repo
         uses: peaceiris/actions-gh-pages@v3
         with:
-          deploy_key: ${{ secrets.DEPLOY_KEY }} 
-          publish_dir: ./public
+          deploy_key: ${{ secrets.DEPLOY_KEY }}       # private key from private repo
           external_repository: yourusername/yourusername.github.io
           publish_branch: main
-    
+          publish_dir: ./public
+          commit_message: "Deploy site from private repo"
