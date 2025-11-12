@@ -20,7 +20,7 @@ jobs:
       - name: Upload site files
         run: |
           mkdir public
-          cp -r * public/
+          cp -r --no-clobber $(find . -maxdepth 1 -not -name public -not -name .) public/
           cp -r pages assets scripts public/ || true
 
       - name: Deploy to yourusername.github.io
