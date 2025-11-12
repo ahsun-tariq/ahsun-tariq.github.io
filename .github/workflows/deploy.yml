@@ -24,12 +24,11 @@ jobs:
           cp -r pages assets scripts public/ || true
 
           
-      - name: Deploy to yourusername.github.io
+      - name: Deploy to GitHub Pages using deploy key
         uses: peaceiris/actions-gh-pages@v3
         with:
-          github_token: ${{ secrets.DEPLOY_TOKEN }}
+          deploy_key: ${{ secrets.DEPLOY_KEY }} 
           publish_dir: ./public
-          external_repository: ahsun-tariq/my-academic-site
+          external_repository: yourusername/yourusername.github.io
           publish_branch: main
-          user_name: "GitHub Actions"
-          user_email: "actions@github.com"
+    
